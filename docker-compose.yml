@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  trendradar:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trendradar
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Tokyo
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    ports:
+      - "8080:8080"
+    networks:
+      - trendradar-net
+
+  # Optional: run crawler as a separate service
+  crawler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: trendradar-crawler
+    restart: "no"
+    command: python crawler.py
+    environment:
+      - TZ=Asia/Tokyo
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    networks:
+      - trendradar-net
+    depends_on:
+      - trendradar
+
+networks:
+  trendradar-net:
+    driver: bridge
+
+volumes:
+  data:
+  logs:

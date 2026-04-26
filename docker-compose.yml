@@ -40,6 +40,7 @@ services:
       - trendradar-net
     depends_on:
       - trendradar
+    # personally i run this manually via `docker compose run crawler` so restart=no is fine
 
 networks:
   trendradar-net:
@@ -47,4 +48,6 @@ networks:
 
 volumes:
   data:
+    driver: local
   logs:
+    driver: local

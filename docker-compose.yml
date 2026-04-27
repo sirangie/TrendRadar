@@ -41,6 +41,12 @@ services:
     depends_on:
       - trendradar
     # personally i run this manually via `docker compose run crawler` so restart=no is fine
+    # adding a resource limit so it doesn't go haywire if something gets stuck
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+          cpus: '0.5'
 
 networks:
   trendradar-net:

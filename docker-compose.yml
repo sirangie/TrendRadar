@@ -51,3 +51,6 @@ volumes:
     driver: local
   logs:
     driver: local
+
+# NOTE: named volumes above are defined but the services use bind mounts (./data, ./logs)
+# so these volume definitions are basically unused - keeping them in case i switch later

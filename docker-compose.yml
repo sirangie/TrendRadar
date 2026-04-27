@@ -42,10 +42,11 @@ services:
       - trendradar
     # personally i run this manually via `docker compose run crawler` so restart=no is fine
     # adding a resource limit so it doesn't go haywire if something gets stuck
+    # bumped memory from 256m -> 512m, was hitting the limit when crawling larger feeds
     deploy:
       resources:
         limits:
-          memory: 256m
+          memory: 512m
           cpus: '0.25'
 
 networks:
